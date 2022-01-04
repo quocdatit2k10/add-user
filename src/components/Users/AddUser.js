@@ -4,15 +4,24 @@ import Cart from "../UI/Cart";
 import "./AddUser.css";
 
 function AddUser(props) {
-  const [enteredUserName, setEnteredUserNamr] = useState("");
+  const [enteredUserName, setEnteredUserName] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
   const addUserHandler = (event) => {
     event.preventDefault();
-    console.log(enteredUserName, enteredAge);
+
+    if (enteredUserName.trim().length === 0 || enteredAge.trim().length) {
+        return;
+    }
+    if (enteredAge < 1) {
+        return;
+    }
+
+    setEnteredUserName("");
+    setEnteredAge("");
   };
 
   const userNameHandler = (event) => {
-    setEnteredUserNamr(event.target.value);
+    setEnteredUserName(event.target.value);
   };
 
   const ageHandler = (event) => {
@@ -23,9 +32,19 @@ function AddUser(props) {
     <Cart>
       <form className="input" onSubmit={addUserHandler}>
         <label htmlFor="username">User Name</label>
-        <input id="username" type="text" onChange={userNameHandler}></input>
+        <input
+          id="username"
+          type="text"
+          value={enteredUserName}
+          onChange={userNameHandler}
+        ></input>
         <label htmlFor="age">Age (Years)</label>
-        <input id="age" type="number" onChange={ageHandler}></input>
+        <input
+          id="age"
+          type="number"
+          value={enteredAge}
+          onChange={ageHandler}
+        ></input>
         <Button type="submit">Add User</Button>
       </form>
     </Cart>
